@@ -1,31 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Tasks from "./components/Tasks";
 import AddTask from "./components/AddTask";
 import {v4} from "uuid";
 
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      text: "Estudar Programação",
-      description:
-        "as 15 horas do dia 24 preciso estudar react, aprender um pouco mais sobre node",
-      isCompleted: true,
-    },
-    {
-      id: 2,
-      text: "Estudar Enem",
-      description:
-        "hoje terei que ver alguns conceitos matematicos e montar o cronograma de biologia",
-      isCompleted: true,
-    },
-    {
-      id: 3,
-      text: "dentista",
-      description: "hoje as 15 horas preciso ir ao dentista fazer uma limpeza",
-      isCompleted: false,
-    },
-  ]);
+  const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem("tasks")) ||[]);
+
+  useEffect(() => {localStorage.setItem("tasks", JSON.stringify(tasks))}, [tasks]) 
 
   function onTaskClick(taskId) {
     const newTasks = tasks.map((task) => {
